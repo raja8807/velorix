@@ -31,6 +31,7 @@
     position: relative;
     z-index: 1;
 
+
     @include respond-below(lg) {
         grid-template-columns: 1fr;
         text-align: center;
@@ -39,6 +40,10 @@
 
 
 .content {
+
+
+    padding-top: 120px;
+
     .title {
         font-size: 4rem;
         font-weight: 800;

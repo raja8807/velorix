@@ -3,6 +3,7 @@ import styles from "./pin_input.module.scss";
 
 const PinInput = ({ length = 6, onChange }) => {
     const [values, setValues] = useState(Array(length).fill(""));
+    const [resetSent, setResetSent] = useState(false);
     const inputsRef = useRef([]);
 
     const handleChange = (e, index) => {
@@ -45,22 +46,41 @@ const PinInput = ({ length = 6, onChange }) => {
         inputsRef.current[nextIndex].focus();
     };
 
+    const handleForgot = () => {
+        setResetSent(true);
+        // Simulate API call
+        setTimeout(() => setResetSent(false), 5000);
+    };
+
     return (
-        <div className={styles.pinContainer}>
-            {values.map((val, index) => (
-                <input
-                    key={index}
-                    ref={(el) => (inputsRef.current[index] = el)}
-                    type="text"
-                    inputMode="numeric"
-                    maxLength={1}
-                    value={val}
-                    onChange={(e) => handleChange(e, index)}
-                    onKeyDown={(e) => handleKeyDown(e, index)}
-                    onPaste={index === 0 ? handlePaste : undefined}
-                    className={styles.pinBox}
-                />
-            ))}
+        <div className={styles.wrapper}>
+            <div className={styles.pinContainer}>
+                {values.map((val, index) => (
+                    <input
+                        key={index}
+                        ref={(el) => (inputsRef.current[index] = el)}
+                        type="text"
+                        inputMode="numeric"
+                        maxLength={1}
+                        value={val}
+                        onChange={(e) => handleChange(e, index)}
+                        onKeyDown={(e) => handleKeyDown(e, index)}
+                        onPaste={index === 0 ? handlePaste : undefined}
+                        className={styles.pinBox}
+                    />
+                ))}
+            </div>
+            <div className={styles.footer}>
+                {resetSent ? (
+                    <span className={styles.successMessage}>
+                        Reset PIN link sent to your email
+                    </span>
+                ) : (
+                    <button type="button" onClick={handleForgot} className={styles.forgotLink}>
+                        Forgot Security PIN?
+                    </button>
+                )}
+            </div>
         </div>
     );
 };

@@ -80,6 +80,7 @@ const PaymentModal = ({ plan, onClose, onSuccess }) => {
                             <p className={styles.label} style={{ marginTop: '16px' }}>Security PIN</p>
                             <PinInput length={6} onChange={handlePinChange} />
 
+                            <br />
                             <CustomButton
                                 fullWidth
                                 onClick={handlePayment}
