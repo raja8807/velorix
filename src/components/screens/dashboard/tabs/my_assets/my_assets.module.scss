@@ -1,0 +1,126 @@
+.myAssets {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.header {
+    margin-bottom: 2rem;
+
+    h2 {
+        color: $color_text_primary;
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    p {
+        color: $color_text_secondary;
+        font-size: 0.95rem;
+    }
+}
+
+.assetsList {
+    background: $color_bg_secondary;
+    border-radius: 16px;
+    border: 1px solid $color_border;
+    overflow: hidden;
+}
+
+.assetRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 2rem;
+    border-bottom: 1px solid $color_divider;
+    transition: $transition-smooth;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background-color: lighten($color_bg_secondary, 2%);
+        transform: scale(1.005);
+    }
+
+    @include respond-below(md) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+}
+
+.assetInfo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: $color_bg_tertiary;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: $color_primary;
+        border: 1px solid $color_divider;
+    }
+
+    .details {
+        h3 {
+            color: $color_text_primary;
+            font-size: 1.1rem;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .symbol {
+            color: $color_text_secondary;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+    }
+}
+
+.assetStats {
+    display: flex;
+    gap: 3rem;
+    text-align: right;
+
+    @include respond-below(md) {
+        width: 100%;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .stat {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .label {
+            color: $color_text_tertiary;
+            font-size: 0.8rem;
+        }
+
+        .value {
+            color: $color_text_primary;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .change {
+            font-size: 0.85rem;
+            font-weight: 500;
+
+            &.positive {
+                color: $color_success;
+            }
+
+            &.negative {
+                color: $color_error;
+            }
+        }
+    }
+}

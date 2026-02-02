@@ -1,0 +1,48 @@
+.trust {
+    padding: 40px 0;
+    background-color: $color_bg_primary;
+    border-bottom: 1px solid $color_divider;
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: $container-padding;
+        text-align: center;
+    }
+
+    .label {
+        color: $color_text_tertiary;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 2rem;
+        display: block;
+    }
+
+    .logos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4rem;
+        flex-wrap: wrap;
+
+        .logo {
+            color: $color_text_secondary;
+            font-size: 1.5rem;
+            font-weight: 700;
+            opacity: 0.5;
+            transition: $transition-smooth;
+
+            &:hover {
+                opacity: 0.8;
+                color: $color_text_primary;
+            }
+        }
+    }
+
+    @include respond-below(md) {
+        .logos {
+            gap: 2rem;
+        }
+    }
+}

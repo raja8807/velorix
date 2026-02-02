@@ -1,0 +1,129 @@
+@import "@/styles/scss/variables";
+@import "@/styles/scss/_media_queries";
+
+.market {
+    background: $color_bg_secondary;
+    border-radius: 16px;
+    border: 1px solid $color_border;
+    overflow: hidden;
+}
+
+.tableHeader {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 0.8fr;
+    padding: 16px 24px;
+    background: rgba($color_primary, 0.05);
+    border-bottom: 1px solid $color_divider;
+    font-weight: 600;
+    color: $color_text_secondary;
+    font-size: 0.9rem;
+
+    @include respond-below(md) {
+        grid-template-columns: 1.5fr 1fr 1fr 0.8fr;
+
+        .col:nth-child(4) {
+            display: none;
+        }
+    }
+}
+
+.coinList {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.coinRow {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 0.8fr;
+    padding: 16px 24px;
+    border-bottom: 1px solid $color_divider;
+    align-items: center;
+    transition: background 0.2s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.02);
+    }
+
+    @include respond-below(md) {
+        grid-template-columns: 1.5fr 1fr 1fr 0.8fr;
+    }
+}
+
+.col {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    color: $color_text_primary;
+
+    &.positive {
+        color: $color_success;
+    }
+
+    &.negative {
+        color: $color_error;
+    }
+
+    @include respond-below(md) {
+        &:nth-child(4) {
+            display: none;
+        }
+    }
+}
+
+.assetInfo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .symbol {
+        font-weight: 700;
+        display: block;
+    }
+
+    .name {
+        color: $color_text_tertiary;
+        font-size: 0.85rem;
+    }
+}
+
+.coinIcon {
+    width: 32px;
+    height: 32px;
+    background: $color_primary;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.coinImg {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.tradeBtn {
+    background: transparent;
+    border: 1px solid $color_primary;
+    color: $color_primary;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: 0.2s;
+
+    &:hover {
+        background: $color_primary;
+        color: white;
+    }
+}
+
+.loading {
+    padding: 2rem;
+    text-align: center;
+    color: $color_text_secondary;
+    font-size: 1.1rem;
+}

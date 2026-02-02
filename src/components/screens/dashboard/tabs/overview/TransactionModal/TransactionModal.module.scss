@@ -1,0 +1,87 @@
+@import "@/styles/scss/variables";
+
+.modalDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .detailRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 12px;
+        border-bottom: 1px solid $color_divider;
+
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .label {
+            color: $color_text_tertiary;
+            font-size: 0.95rem;
+        }
+
+        .value {
+            color: $color_text_primary;
+            font-weight: 500;
+
+            &.positive {
+                color: $color_success;
+            }
+        }
+
+        .statusBadge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba($color_text_secondary, 0.1);
+            color: $color_text_secondary;
+
+            &.completed {
+                background: rgba($color_success, 0.1);
+                color: $color_success;
+            }
+
+            &.pending {
+                background: rgba($color_warning, 0.1);
+                color: $color_warning;
+            }
+
+            &.declined {
+                background: rgba($color_error, 0.1);
+                color: $color_error;
+            }
+        }
+
+        .txId {
+            font-family: monospace;
+            background: $color_bg_tertiary;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: $color_text_secondary;
+        }
+    }
+}
+
+.actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 16px;
+
+    button {
+        flex: 1;
+    }
+
+    .declineBtn {
+        background: rgba($color_error, 0.1);
+        color: $color_error;
+        border: 1px solid rgba($color_error, 0.2);
+
+        &:hover {
+            background: rgba($color_error, 0.2);
+        }
+    }
+}

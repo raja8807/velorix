@@ -1,0 +1,246 @@
+@import "@/styles/scss/variables";
+@import "@/styles/scss/_media_queries";
+
+.subscription {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-bottom: 40px;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h1 {
+        font-size: 2rem;
+        color: $color_text_primary;
+        margin-bottom: 12px;
+    }
+
+    p {
+        color: $color_text_tertiary;
+        font-size: 1rem;
+    }
+}
+
+.plansGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+
+
+    @include respond-below(lg) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @include respond-below(sm) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.planCard {
+    background: $color_bg_secondary;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s ease;
+    cursor: default;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    &.current {
+        border-color: $color_primary;
+        background: rgba($color_primary, 0.05);
+        box-shadow: 0 0 0 1px $color_primary;
+    }
+
+    &.featured {
+        background: linear-gradient(145deg, $color_bg_secondary 0%, rgba($color_primary, 0.1) 100%);
+        border: 1px solid rgba($color_primary, 0.3);
+        transform: scale(1.05);
+        z-index: 2;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+
+        @include respond-below(lg) {
+            transform: none;
+            z-index: 1;
+        }
+
+        &:hover {
+            transform: scale(1.05) translateY(-5px);
+
+            @include respond-below(lg) {
+                transform: translateY(-5px);
+            }
+        }
+    }
+}
+
+.badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: $color_primary;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba($color_primary, 0.4);
+}
+
+.planName {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: $color_text_secondary;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.price {
+    text-align: center;
+    margin-bottom: 24px;
+
+    .amount {
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: $color_text_primary;
+    }
+
+    .period {
+        font-size: 0.9rem;
+        color: $color_text_tertiary;
+    }
+}
+
+.benefits {
+    flex: 1;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: $color_text_secondary;
+        font-size: 0.9rem;
+        line-height: 1.4;
+
+        .icon {
+            color: $color_success;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        &.disabled {
+            color: $color_text_tertiary;
+            opacity: 0.6;
+
+            .icon {
+                color: $color_text_tertiary;
+            }
+        }
+    }
+}
+
+.selectBtn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: rgba(255, 255, 255, 0.05);
+    color: $color_text_primary;
+
+    &:hover:not(:disabled) {
+        background: $color_text_primary;
+        color: $color_bg_primary;
+    }
+
+    &.primary {
+        background: $color_primary;
+        color: white;
+
+        &:hover {
+            background: lighten($color_primary, 5%);
+            box-shadow: 0 5px 15px rgba($color_primary, 0.4);
+        }
+    }
+
+    &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background: transparent;
+        border: 1px solid $color_border;
+        color: $color_text_tertiary;
+    }
+}
+
+.disclaimer {
+    text-align: center;
+    color: $color_text_tertiary;
+    font-size: 0.85rem;
+    margin-top: 30px;
+    margin-top: 30px;
+    opacity: 0.7;
+}
+
+.buttonContainer {
+    margin-top: auto;
+}
+
+// Loading overlay
+.loadingOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color_bg_secondary, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    z-index: 10;
+    flex-direction: column;
+    gap: 12px;
+
+    .spinner {
+        width: 30px;
+        height: 30px;
+        border: 2px solid rgba($color_primary, 0.2);
+        border-top-color: $color_primary;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    span {
+        font-size: 0.9rem;
+        color: $color_primary;
+        font-weight: 500;
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

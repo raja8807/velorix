@@ -1,0 +1,28 @@
+@import "@/styles/scss/variables";
+
+.pinContainer {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin: 16px 0;
+}
+
+.pinBox {
+    width: 45px;
+    height: 55px;
+    border: 1px solid $color_divider;
+    background: $color_bg_tertiary;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 1.25rem;
+    color: $color_text_primary;
+    font-weight: 600;
+    transition: all 0.2s;
+
+    &:focus {
+        outline: none;
+        border-color: $color_primary;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+}

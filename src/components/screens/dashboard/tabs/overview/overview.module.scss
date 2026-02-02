@@ -1,0 +1,181 @@
+.overview {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+
+
+.sectionTitle {
+    color: $color_text_primary;
+    font-size: 1.25rem;
+    margin-bottom: 16px;
+    font-weight: 600;
+}
+
+.txList {
+    background: $color_bg_secondary;
+    border-radius: 16px;
+    border: 1px solid $color_border;
+    overflow: hidden;
+}
+
+.txItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid $color_divider;
+    transition: background 0.2s;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.02);
+    }
+}
+
+.txLeft {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: white;
+
+        &.receive {
+            background: rgba($color_success, 0.2);
+            color: $color_success;
+        }
+
+        &.send {
+            background: rgba($color_warning, 0.2);
+            color: $color_warning;
+        }
+
+        &.swap {
+            background: rgba($color_accent, 0.2);
+            color: $color_accent;
+        }
+    }
+
+    .txInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+    }
+
+    .txType {
+        color: $color_text_primary;
+        font-weight: 600;
+    }
+
+    .txDate {
+        color: $color_text_tertiary;
+        font-size: 0.85rem;
+    }
+}
+
+.txRight {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .txAmount {
+        font-weight: 600;
+        color: $color_text_primary;
+
+        &.positive {
+            color: $color_success;
+        }
+    }
+
+    .txStatus {
+        color: $color_text_tertiary;
+        font-size: 0.8rem;
+    }
+
+    .pendingBadge {
+        background: rgba($color_warning, 0.1);
+        color: $color_warning;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        &::before {
+            content: "";
+            display: block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: $color_warning;
+        }
+    }
+}
+
+// Modal Details Styles
+.modalDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .detailRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 12px;
+        border-bottom: 1px solid $color_divider;
+
+        &:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .label {
+            color: $color_text_tertiary;
+            font-size: 0.95rem;
+        }
+
+        .value {
+            color: $color_text_primary;
+            font-weight: 500;
+
+            &.positive {
+                color: $color_success;
+            }
+        }
+
+        .statusBadge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            background: rgba($color_text_secondary, 0.1);
+            color: $color_text_secondary;
+        }
+
+        .txId {
+            font-family: monospace;
+            background: $color_bg_tertiary;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: $color_text_secondary;
+        }
+    }
+}

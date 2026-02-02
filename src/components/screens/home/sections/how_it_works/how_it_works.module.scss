@@ -1,0 +1,95 @@
+.howItWorks {
+    padding: $section-padding;
+    background-color: $color_bg_primary;
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: $container-padding;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 5rem;
+
+        h2 {
+            font-size: 2.5rem;
+            color: $color_text_primary;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: $color_text_secondary;
+            font-size: 1.1rem;
+        }
+    }
+
+    .steps {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        gap: 2rem;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, $color_border, transparent);
+            z-index: 1;
+        }
+
+        @include respond-below(md) {
+            flex-direction: column;
+            align-items: center;
+            gap: 4rem;
+
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+    .step {
+        flex: 1;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+        max-width: 300px;
+
+        .number {
+            width: 80px;
+            height: 80px;
+            background-color: $color_bg_tertiary;
+            border: 2px solid $color_primary;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: $color_primary;
+            box-shadow: 0 0 20px rgba($color_primary, 0.2);
+            transition: $transition-smooth;
+        }
+
+        &:hover .number {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba($color_primary, 0.4);
+        }
+
+        h3 {
+            color: $color_text_primary;
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            color: $color_text_secondary;
+            line-height: 1.6;
+        }
+    }
+}

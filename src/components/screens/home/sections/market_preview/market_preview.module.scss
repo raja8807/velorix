@@ -1,0 +1,110 @@
+.marketPreview {
+    padding: $section-padding;
+    background-color: $color_bg_secondary;
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: $container-padding;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+
+        h2 {
+            color: $color_text_primary;
+            font-size: 2rem;
+        }
+
+        .viewAll {
+            color: $color_primary;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: $transition-smooth;
+
+            &:hover {
+                gap: 0.8rem;
+            }
+        }
+    }
+
+    .marketTable {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: $color_bg_tertiary;
+        border-radius: 12px;
+        overflow: hidden;
+
+        th,
+        td {
+            padding: 1.25rem 2rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.02);
+            color: $color_text_secondary;
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-bottom: 1px solid $color_divider;
+        }
+
+        td {
+            color: $color_text_primary;
+            font-weight: 500;
+            border-bottom: 1px solid $color_divider;
+
+            &:last-child {
+                text-align: right;
+            }
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr {
+            transition: background-color 0.2s;
+
+            &:hover {
+                background-color: lighten($color_bg_tertiary, 3%);
+            }
+        }
+
+        .coinName {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            .symbol {
+                color: $color_text_secondary;
+                font-size: 0.9rem;
+            }
+        }
+
+        .positive {
+            color: $color_success;
+        }
+
+        .negative {
+            color: $color_error;
+        }
+
+        .textRight {
+            text-align: right;
+        }
+    }
+
+    @include respond-below(md) {
+        .marketTable {
+            display: block;
+            overflow-x: auto;
+        }
+    }
+}

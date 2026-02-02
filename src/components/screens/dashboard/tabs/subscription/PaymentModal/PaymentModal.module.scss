@@ -1,0 +1,200 @@
+@import "@/styles/scss/variables";
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: $color_bg_secondary;
+    width: 90%;
+    max-width: 450px;
+    border-radius: 20px;
+    border: 1px solid $color_border;
+    overflow: hidden;
+    animation: slideUp 0.3s ease-out;
+}
+
+.header {
+    padding: 20px 24px;
+    border-bottom: 1px solid $color_divider;
+    position: relative;
+    text-align: center;
+
+    h2 {
+        font-size: 1.25rem;
+        margin-bottom: 4px;
+        color: $color_text_primary;
+    }
+
+    .price {
+        font-size: 1.1rem;
+        color: $color_primary;
+        font-weight: 700;
+    }
+
+    .closeBtn {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        color: $color_text_tertiary;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 4px;
+        line-height: 1;
+
+        &:hover {
+            color: $color_text_primary;
+        }
+    }
+}
+
+.tabs {
+    display: flex;
+    padding: 12px 12px 0;
+    gap: 8px;
+    border-bottom: 1px solid $color_divider;
+
+    .tab {
+        flex: 1;
+        background: none;
+        border: none;
+        padding: 12px;
+        color: $color_text_secondary;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        border-bottom: 2px solid transparent;
+        transition: 0.2s;
+        font-size: 0.9rem;
+
+        &:hover {
+            color: $color_text_primary;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px 8px 0 0;
+        }
+
+        &.active {
+            color: $color_primary;
+            border-bottom-color: $color_primary;
+        }
+    }
+}
+
+.body {
+    padding: 24px;
+}
+
+.walletTab {
+    text-align: center;
+
+    .label {
+        color: $color_text_secondary;
+        font-size: 0.9rem;
+    }
+
+    .balance {
+        font-size: 2rem;
+        margin: 8px 0 24px;
+        color: $color_text_primary;
+    }
+
+    .error {
+        color: $color_error;
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+}
+
+.errorMessage {
+    background: rgba($color_error, 0.1);
+    color: $color_error;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+    border: 1px solid rgba($color_error, 0.2);
+}
+
+.cardForm {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .row {
+        display: flex;
+        gap: 16px;
+    }
+}
+
+.cryptoTab {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    .qrPlaceholder {
+        background: white;
+        padding: 16px;
+        border-radius: 12px;
+        width: fit-content;
+        margin: 0 auto;
+        color: black;
+    }
+
+    .addressBox {
+        text-align: left;
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: $color_text_tertiary;
+            margin-bottom: 6px;
+        }
+
+        .address {
+            background: $color_bg_tertiary;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            word-break: break-all;
+            border: 1px solid $color_divider;
+            color: $color_text_secondary;
+        }
+
+        .copyHint {
+            display: block;
+            text-align: right;
+            font-size: 0.75rem;
+            color: $color_primary;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

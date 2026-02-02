@@ -1,0 +1,82 @@
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputGroup {
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label {
+        color: $color_text_tertiary;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .balanceHint {
+        font-size: 0.8rem;
+        color: $color_text_secondary;
+        margin-top: 4px;
+        text-align: right;
+    }
+}
+
+.amountInput {
+    position: relative;
+
+    .maxBtn {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba($color_primary, 0.2);
+        color: $color_primary;
+        border: none;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        cursor: pointer;
+
+        &:hover {
+            background: $color_primary;
+            color: white;
+        }
+    }
+}
+
+.inputNoLabel {
+    padding-right: 60px;
+}
+
+.input {
+    background: $color_bg_tertiary;
+    border: 1px solid $color_divider;
+    color: $color_text_primary;
+    padding: 14px 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    width: 100%;
+    transition: 0.2s;
+
+    &:focus {
+        outline: none;
+        border-color: $color_primary;
+    }
+}
+
+.note {
+    background: rgba($color_success, 0.1);
+    color: $color_success;
+    font-size: 0.9rem;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.actions {
+    margin-top: 1rem;
+}

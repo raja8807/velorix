@@ -1,0 +1,183 @@
+.account {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.profileHeader {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 60px;
+
+    @include respond-below(sm) {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.avatarLarge {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid $color_primary;
+    box-shadow: 0 5px 20px rgba($color_primary, 0.4);
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.userInfo {
+    flex: 1;
+
+    .name {
+        font-size: 2rem;
+        color: $color_text_primary;
+        margin-bottom: 4px;
+    }
+
+    .email {
+        color: $color_text_secondary;
+        margin-bottom: 8px;
+    }
+
+    .joined {
+        font-size: 0.85rem;
+        color: $color_text_tertiary;
+        background: rgba(255, 255, 255, 0.05);
+        padding: 4px 8px;
+        border-radius: 6px;
+    }
+}
+
+.section {
+    background: $color_bg_secondary;
+    padding: 30px;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    border: 1px solid $color_border;
+
+    .sectionTitle {
+        color: $color_text_tertiary;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+}
+
+.field {
+    label {
+        display: block;
+        color: $color_text_secondary;
+        margin-bottom: 12px;
+        font-size: 0.9rem;
+    }
+}
+
+.copyRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: $color_bg_tertiary;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid $color_divider;
+
+    code {
+        flex: 1;
+        color: $color_text_primary;
+        font-family: monospace;
+        font-size: 1rem;
+    }
+
+    .copyBtn {
+        background: transparent;
+        border: none;
+        color: $color_primary;
+        font-weight: 600;
+        cursor: pointer;
+        padding: 4px 8px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.actions {
+    text-align: right;
+}
+
+.subscriptionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    h3 {
+        margin: 0;
+    }
+}
+
+.subscriptionCard {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+
+    .cardRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .fieldLabel {
+        color: #888;
+        font-size: 0.9rem;
+    }
+
+    .fieldValue {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 4px;
+    }
+
+    .activeBadge {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+        background: rgba(39, 209, 127, 0.2);
+        color: #27d17f;
+        border-radius: 10px;
+    }
+
+    .limitValue {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #fff;
+        margin-top: 4px;
+    }
+
+    .expiryRow {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        color: #888;
+        font-size: 0.85rem;
+    }
+
+    .textWhite {
+        color: #fff;
+    }
+
+    .textAlignRight {
+        text-align: right;
+    }
+}

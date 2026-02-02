@@ -1,0 +1,33 @@
+$color_primary: #8b1538; // Burgundy – trust, authority, premium
+$color_secondary: #1c1f26; // Obsidian Black – depth & security
+$color_accent: #f2c94c; // Gold Accent – value & wealth
+
+$color_bg_primary: #0f1115; // Dark crypto background
+$color_bg_secondary: #161a22; // Card / section background
+$color_bg_tertiary: #1f2430; // Elevated surfaces
+
+$color_text_primary: #ffffff; // Main text
+$color_text_secondary: #b8bcc8; // Muted text
+$color_text_tertiary: #7c8191; // Labels / placeholders
+
+$color_success: #27ae60; // Price up / success
+$color_error: #eb5757; // Errors / price drop
+$color_warning: #f2994a; // Alerts
+
+$color_border: rgba(255, 255, 255, 0.08);
+$color_divider: rgba(255, 255, 255, 0.05);
+
+
+// Gradients
+
+
+
+// Spacing
+$section-padding: 80px 0;
+$container-padding: 0 20px;
+$border-radius: 12px;
+$box-shadow: 0 10px 30px rgba(139, 21, 56, 0.1);
+$box-shadow-hover: 0 20px 40px rgba(139, 21, 56, 0.2);
+
+// Transitions
+$transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

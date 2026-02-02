@@ -1,0 +1,100 @@
+@import "@/styles/scss/variables";
+@import "@/styles/scss/_media_queries";
+
+.totalBalanceCard {
+    background: linear-gradient(135deg, $color_bg_secondary 0%, rgba($color_primary, 0.2) 100%);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: $box-shadow;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    @include respond-below(sm) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .balanceSection {
+        display: flex;
+        gap: 40px;
+
+        @include respond-below(sm) {
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    .balanceItem {
+        display: flex;
+        flex-direction: column;
+
+        &.pending {
+            position: relative;
+            padding-left: 40px;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+
+            @include respond-below(sm) {
+                padding-left: 0;
+                border-left: none;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding-top: 20px;
+            }
+
+            .amount {
+                color: rgba($color_text_primary, 0.7);
+                font-size: 2rem;
+            }
+
+            .balanceHeader {
+                color: $color_warning;
+            }
+        }
+    }
+
+    .balanceHeader {
+        display: flex;
+        justify-content: space-between;
+        color: $color_text_tertiary;
+        margin-bottom: 8px;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        gap: 8px;
+    }
+
+    .amount {
+        font-size: 2.5rem;
+        color: $color_text_primary;
+        font-weight: 700;
+        margin-bottom: 8px;
+        letter-spacing: -1px;
+        line-height: 1.1;
+
+        @include respond-below(sm) {
+            font-size: 2.2rem;
+        }
+    }
+
+    .pnl {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        font-size: 0.9rem;
+
+        .positive {
+            color: $color_success;
+        }
+
+        .negative {
+            color: $color_error;
+        }
+
+        .label {
+            color: $color_text_tertiary;
+        }
+    }
+}
