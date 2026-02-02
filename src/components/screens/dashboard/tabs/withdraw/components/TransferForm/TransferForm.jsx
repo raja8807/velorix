@@ -23,13 +23,13 @@ const TransferForm = () => {
         e.preventDefault();
         setStatus("processing");
         setTimeout(() => {
-            if (!userProfile.currentSubscription || userProfile.currentSubscription === "VIP-0") {
-                alert("You must have an active subscription plan to transfer funds.");
-                router.push("/dashboard/account/subscription");
-                return;
-            }
-
+            // Success state
             setStatus("success");
+
+            // Redirect after 5 seconds
+            setTimeout(() => {
+                router.push("/dashboard/overview");
+            }, 5000);
         }, 1500);
     };
 
@@ -86,7 +86,12 @@ const TransferForm = () => {
             </div>
 
             <div className={styles.actions}>
-                <CustomButton type="submit" fullWidth disabled={status === "processing"}>
+                <CustomButton
+                    type="submit"
+                    fullWidth
+                    disabled={status === "processing" || status === "success"}
+                    className={status === "success" ? styles.successBtn : ""}
+                >
                     {status === "processing" ? "Sending..." : status === "success" ? "Transfer Sent!" : "Send Assets"}
                 </CustomButton>
             </div>
