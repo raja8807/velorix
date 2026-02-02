@@ -12,7 +12,7 @@ const Hero = () => {
                         <span className={styles.highlight}>Crypto</span> for Everyone.
                     </h1>
                     <p className={styles.subtitle}>
-                        Buy, sell, and store digital assets with the world's most secure and user-friendly crypto wallet.
+                        Buy, sell, and store digital assets with the world&apos;s most secure and user-friendly crypto wallet.
                         Start your journey with zero fees on your first transfer.
                     </p>
                     <div className={styles.actions}>
