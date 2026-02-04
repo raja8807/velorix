@@ -168,6 +168,15 @@ export const marketCoins = [
         chartData: [1820, 1810, 1805, 1800, 1790, 1795, 1800],
     },
     {
+        id: "tether",
+        name: "Tether",
+        symbol: "USDT",
+        price: 1.00,
+        change24h: 0.0,
+        marketCap: "83B",
+        chartData: [1.00, 1.00, 0.99, 1.00, 1.00, 1.00, 1.00],
+    },
+    {
         id: "solana",
         name: "Solana",
         symbol: "SOL",
@@ -175,24 +184,6 @@ export const marketCoins = [
         change24h: 5.4,
         marketCap: "13B",
         chartData: [28, 29, 30, 31, 31.5, 32, 32.5],
-    },
-    {
-        id: "cardano",
-        name: "Cardano",
-        symbol: "ADA",
-        price: 0.28,
-        change24h: 0.1,
-        marketCap: "9B",
-        chartData: [0.27, 0.28, 0.28, 0.28, 0.28, 0.28, 0.28],
-    },
-    {
-        id: "ripple",
-        name: "XRP",
-        symbol: "XRP",
-        price: 0.55,
-        change24h: -1.2,
-        marketCap: "29B",
-        chartData: [0.56, 0.56, 0.55, 0.55, 0.54, 0.55, 0.55],
     },
 ];
 

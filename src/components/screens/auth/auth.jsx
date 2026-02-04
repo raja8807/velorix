@@ -1,39 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./auth.module.scss";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import CustomInput from "@/components/ui/custom_input/custom_input";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 const AuthScreen = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const { signIn, signUp, user } = useAuth();
+
+    useEffect(() => {
+        if (user) {
+            router.push("/dashboard");
+        }
+    }, [user, router]);
+
     const [values, setValues] = useState({
-        email: "test@gmail.com",
-        password: "test123",
-        confirmPassword: "test123",
+        email: "",
+        password: "",
+        confirmPassword: "",
     })
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setError("");
+        setLoading(true);
 
-        // Dummy validation
         const email = values.email;
         const password = values.password;
 
         if (!email || !password) {
             setError("Please fill in all fields.");
+            setLoading(false);
             return;
         }
 
         if (!email.includes("@")) {
             setError("Please enter a valid email.");
+            setLoading(false);
             return;
         }
 
-        // Mock success
-        console.log(isLogin ? "Logging in..." : "Signing up...");
-        router.push("/dashboard");
+        if (!isLogin && password !== values.confirmPassword) {
+            setError("Passwords do not match.");
+            setLoading(false);
+            return;
+        }
+
+        try {
+            let result;
+            if (isLogin) {
+                result = await signIn(email, password);
+            } else {
+                result = await signUp(email, password);
+            }
+
+            if (result.error) {
+                setError(result.error.message);
+            } else {
+                if (!isLogin && !result.data.session) {
+                    // Handle case where email confirmation is required, if enabled in Supabase
+                    setError("Please check your email for confirmation link.");
+                } else {
+                    router.push("/dashboard");
+                }
+            }
+        } catch (err) {
+            console.error(err);
+            setError("An unexpected error occurred.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -99,8 +139,8 @@ const AuthScreen = () => {
                     {error && <div className={styles.errorMessage}>{error}</div>}
 
                     <div className={styles.actions}>
-                        <CustomButton type="submit" fullWidth variant="primary">
-                            {isLogin ? "Log In" : "Sign Up"}
+                        <CustomButton type="submit" fullWidth variant="primary" disabled={loading}>
+                            {loading ? "Processing..." : (isLogin ? "Log In" : "Sign Up")}
                         </CustomButton>
                     </div>
                 </form>
@@ -108,7 +148,7 @@ const AuthScreen = () => {
                 <div className={styles.footer}>
                     <p>
                         {isLogin ? "Don't have an account?" : "Already have an account?"}
-                        <span onClick={() => setIsLogin(!isLogin)} className={styles.link}>
+                        <span onClick={() => { setIsLogin(!isLogin); setError(""); }} className={styles.link}>
                             {isLogin ? " Sign Up" : " Log In"}
                         </span>
                     </p>

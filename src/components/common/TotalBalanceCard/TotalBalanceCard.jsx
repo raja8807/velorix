@@ -1,12 +1,13 @@
 import React from "react";
 import styles from "./TotalBalanceCard.module.scss";
-import { userAssets, transactions } from "@/constants/dummy_data";
 import { calculateWalletBalance, calculatePendingBalance } from "@/utils/financials";
 import CustomButton from "@/components/ui/custom_button/custom_button";
+import { useAppContext } from "@/context/AppContext";
 
 const TotalBalanceCard = () => {
-    const walletBalance = calculateWalletBalance(userAssets);
-    const pendingBalance = calculatePendingBalance(transactions);
+    const { assets, transactions } = useAppContext();
+    const walletBalance = calculateWalletBalance(assets || []);
+    const pendingBalance = calculatePendingBalance(transactions || []);
 
     return (
         <div className={styles.totalBalanceCard}>
@@ -17,7 +18,7 @@ const TotalBalanceCard = () => {
                         <span className={styles.currency}>{walletBalance.currency}</span>
                     </div>
                     <h1 className={styles.amount}>
-                        ${walletBalance.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                        ${walletBalance.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </h1>
                     <div className={styles.pnl}>
                         <span className={walletBalance.change24h >= 0 ? styles.positive : styles.negative}>
@@ -33,7 +34,7 @@ const TotalBalanceCard = () => {
                             <span>Pending Inbound</span>
                         </div>
                         <h1 className={styles.amount}>
-                            ${pendingBalance.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                            ${pendingBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </h1>
                         <div className={styles.pnl}>
                             <span className={styles.label}>Processing...</span>

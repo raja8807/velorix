@@ -3,18 +3,20 @@ import styles from "./PaymentModal.module.scss";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import CustomInput from "@/components/ui/custom_input/custom_input";
 import { Wallet2, CreditCard, QrCode } from "react-bootstrap-icons";
-import { userAssets } from "@/constants/dummy_data";
 import { calculateWalletBalance } from "@/utils/financials";
 import PinInput from "@/components/common/pin_input/pin_input";
+import { useAppContext } from "@/context/AppContext";
+import { Image } from "react-bootstrap";
 
 const PaymentModal = ({ plan, onClose, onSuccess }) => {
+    const { assets } = useAppContext();
     const [activeTab, setActiveTab] = useState("wallet");
     const [isProcessing, setIsProcessing] = useState(false);
 
     const [cardError, setCardError] = useState(null);
 
     // Get Wallet Balance
-    const { total } = calculateWalletBalance(userAssets);
+    const { total } = calculateWalletBalance(assets || []);
 
     const handlePayment = () => {
         setIsProcessing(true);
@@ -112,12 +114,12 @@ const PaymentModal = ({ plan, onClose, onSuccess }) => {
                     {activeTab === "crypto" && (
                         <div className={styles.cryptoTab}>
                             <div className={styles.qrPlaceholder}>
-                                <QrCode size={100} />
+                                <Image src="/images/qr.jpg" alt="QR Code" width={100} height={100} />
                             </div>
                             <div className={styles.addressBox}>
-                                <label>Send exact amount to:</label>
+                                <label>Send exact <span style={{ color: '#F7931A' }}>BTC</span> amount to:</label>
                                 <div className={styles.address}>
-                                    0x71C7656EC7ab88b098defB751B7401B5f6d8976F
+                                    bc1qh03xh7827c3855jn6v82hnragqzux4g8j3rv4t
                                 </div>
                                 <span className={styles.copyHint}>Click to copy address</span>
                             </div>

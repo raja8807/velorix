@@ -3,10 +3,12 @@ import Link from "next/link";
 import { List, X } from "react-bootstrap-icons";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import styles from "./Header.module.scss";
+import { useAuth } from "@/context/AuthContext";
 
 const Header = ({ isScrolled }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("Dashboard");
+  const { user } = useAuth();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -59,12 +61,20 @@ const Header = ({ isScrolled }) => {
 
           {/* Desktop Actions */}
           <div className={styles.actions}>
-            <CustomButton variant="outline" href="/login">
-              Login
-            </CustomButton>
-            <CustomButton variant="primary" href="/login">
-              Sign Up
-            </CustomButton>
+            {user ? (
+              <CustomButton variant="primary" href="/dashboard">
+                Go to Wallet
+              </CustomButton>
+            ) : (
+              <>
+                <CustomButton variant="outline" href="/login">
+                  Login
+                </CustomButton>
+                <CustomButton variant="primary" href="/login">
+                  Sign Up
+                </CustomButton>
+              </>
+            )}
           </div>
 
           {/* Mobile Hamburger */}
@@ -102,22 +112,35 @@ const Header = ({ isScrolled }) => {
         </ul>
 
         <div className={styles.mobileActions}>
-          <CustomButton
-            variant="outline"
-            fullWidth
-            href="/login"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Login
-          </CustomButton>
-          <CustomButton
-            variant="primary"
-            fullWidth
-            href="/login"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Sign Up
-          </CustomButton>
+          {user ? (
+            <CustomButton
+              variant="primary"
+              fullWidth
+              href="/dashboard"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Go to Wallet
+            </CustomButton>
+          ) : (
+            <>
+              <CustomButton
+                variant="outline"
+                fullWidth
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Login
+              </CustomButton>
+              <CustomButton
+                variant="primary"
+                fullWidth
+                href="/login"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Sign Up
+              </CustomButton>
+            </>
+          )}
         </div>
       </div>
     </>

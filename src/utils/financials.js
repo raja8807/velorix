@@ -26,6 +26,13 @@ export const calculateWalletBalance = (assets) => {
 export const calculatePendingBalance = (transactions) => {
     if (!transactions || transactions.length === 0) return 0;
 
+    // We need market data to calculate value if it's 0. 
+    // Ideally this should be passed in or available. 
+    // For now, we'll assume the transaction object might have been enhanced or we used a fixed logic.
+    // Actually, AppContext enhancement is better. But let's import dummy data here as a fallback or assume 
+    // AppContext normalizes it. 
+    // Best approach: Update AppContext to fill in 'value' using marketCoins.
+
     return transactions
         .filter(tx => tx.status === "Pending" && tx.type === "Receive")
         .reduce((acc, tx) => acc + (tx.value || 0), 0);

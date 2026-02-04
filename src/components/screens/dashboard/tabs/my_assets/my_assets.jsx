@@ -1,10 +1,12 @@
 import React from "react";
 import styles from "./my_assets.module.scss";
 import TotalBalanceCard from "@/components/common/TotalBalanceCard/TotalBalanceCard";
-import { userAssets } from "@/constants/dummy_data";
 import { CurrencyBitcoin, CurrencyExchange, GraphUpArrow, WalletFill } from "react-bootstrap-icons";
+import { useAppContext } from "@/context/AppContext";
 
 const MyAssets = () => {
+    const { assets } = useAppContext();
+
     const getIcon = (symbol) => {
         switch (symbol) {
             case "BTC": return <CurrencyBitcoin />;
@@ -25,7 +27,7 @@ const MyAssets = () => {
             <TotalBalanceCard />
 
             <div className={styles.assetsList}>
-                {userAssets.map((asset) => {
+                {(assets || []).map((asset) => {
                     const value = asset.balance * asset.price;
                     const isPositive = asset.change24h >= 0;
 
@@ -50,7 +52,9 @@ const MyAssets = () => {
                                 </div>
                                 <div className={styles.stat}>
                                     <span className={styles.label}>Balance</span>
-                                    <span className={styles.value}>{asset.balance} {asset.symbol}</span>
+                                    <span className={styles.value}>
+                                        {Number(asset.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {asset.symbol}
+                                    </span>
                                     <span className={`${styles.label} ${styles.fiatValue}`}>
                                         ≈ ${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </span>
@@ -58,7 +62,7 @@ const MyAssets = () => {
                                 <div className={`${styles.stat} ${styles.statRight}`}>
                                     <span className={styles.label}>24h</span>
                                     <span className={`${styles.change} ${isPositive ? styles.positive : styles.negative}`}>
-                                        {isPositive ? "+" : ""}{asset.change24h}%
+                                        {isPositive ? "+" : ""}{Number(asset.change24h).toFixed(2)}%
                                     </span>
                                 </div>
                             </div>

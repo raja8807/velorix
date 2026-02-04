@@ -1,19 +1,20 @@
 import React from "react";
 import { useRouter } from "next/router";
 import styles from "./TransactionModal.module.scss";
-import { userProfile } from "@/constants/dummy_data";
 import CustomModal from "@/components/ui/custom_modal/custom_modal";
 import CustomButton from "@/components/ui/custom_button/custom_button";
+import { useAuth } from "@/context/AuthContext";
 
 const TransactionModal = ({ isOpen, onClose, transaction, onUpdateStatus }) => {
     const router = useRouter();
+    const { userData } = useAuth();
 
     if (!transaction) return null;
 
     const isPendingReceive = transaction.status === "Pending" && transaction.type === "Receive";
 
     const handleAction = (status) => {
-        if (status === "Completed" && userProfile.currentSubscription === "VIP-0") {
+        if (status === "Completed" && (!userData?.current_subscription || userData.current_subscription === "VIP-0")) {
             alert("You need at least VIP-1 to accept external transfers.");
             router.push("/dashboard/account/subscription");
             return;

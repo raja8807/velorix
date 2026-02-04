@@ -3,14 +3,17 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import styles from "./DashboardLayout.module.scss";
 import { CurrencyExchange, GraphUp, GraphUpArrow, Grid, Grid1x2Fill, PersonCircle, PersonLinesFill, Wallet, Wallet2, WalletFill } from "react-bootstrap-icons";
-import { userProfile, transactions } from "@/constants/dummy_data";
+import { useAuth } from "@/context/AuthContext";
+import { useAppContext } from "@/context/AppContext";
 
 const DashboardLayout = ({ children }) => {
     const router = useRouter();
+    const { userData } = useAuth();
+    const { transactions } = useAppContext();
     const [activeTab, setActiveTab] = useState("");
 
     // Calculate pending transactions
-    const pendingCount = transactions.filter(t => t.status === "Pending" && t.type === "Receive").length;
+    const pendingCount = (transactions || []).filter(t => t.status === "Pending" && t.type === "Receive").length;
 
     // Set active tab based on current path
     useEffect(() => {
@@ -46,11 +49,11 @@ const DashboardLayout = ({ children }) => {
                         >
                             <span className={styles.icon}>
                                 {activeTab === item.id ? item.iconActive : item.icon}
-                                {item.hasBadge && <p className={styles.badgeTab}>{userProfile.currentSubscription}</p>}
+                                {item.hasBadge && <p className={styles.badgeTab}>{userData?.current_subscription || "VIP-0"}</p>}
                                 {item.badgeCount > 0 && <span className={styles.notificationBadgeTab}>{item.badgeCount}</span>}
                             </span>
                             <span className={styles.label}>{item.label}</span>
-                            {item.hasBadge && <p className={styles.badgeList}>{userProfile.currentSubscription}</p>}
+                            {item.hasBadge && <p className={styles.badgeList}>{userData?.current_subscription || "VIP-0"}</p>}
                             {item.badgeCount > 0 && <span className={styles.notificationBadgeList}>{item.badgeCount}</span>}
                         </Link>
                     ))}

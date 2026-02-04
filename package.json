@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.94.0",
     "aos": "^2.3.4",
     "bootstrap": "^5.2.3",
     "eslint": "8.38.0",

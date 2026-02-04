@@ -2,16 +2,24 @@ import React, { useState } from "react";
 import styles from "./TransferForm.module.scss";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import CustomInput from "@/components/ui/custom_input/custom_input";
-import { userAssets, userProfile } from "@/constants/dummy_data";
 import { useRouter } from "next/router";
+import { useAppContext } from "@/context/AppContext";
 
 const TransferForm = () => {
     const router = useRouter();
+    const { assets, checkUserByEmail, checkPendingInbound, sendTransfer } = useAppContext();
     const [status, setStatus] = useState("");
-    const [selectedAssetSymbol, setSelectedAssetSymbol] = useState(userAssets[0]?.symbol || "");
+    const [selectedAssetSymbol, setSelectedAssetSymbol] = useState("BTC");
     const [amount, setAmount] = useState("");
 
-    const selectedAsset = userAssets.find(a => a.symbol === selectedAssetSymbol) || {};
+    // Recipient State
+    const [recipientEmail, setRecipientEmail] = useState("");
+    const [verifiedUser, setVerifiedUser] = useState(null);
+    const [isVerifying, setIsVerifying] = useState(false);
+    const [verificationError, setVerificationError] = useState("");
+
+    const safeAssets = assets || [];
+    const selectedAsset = safeAssets.find(a => a.symbol === selectedAssetSymbol) || {};
 
     const handleMax = () => {
         if (selectedAsset) {
@@ -19,18 +27,57 @@ const TransferForm = () => {
         }
     };
 
-    const handleTransfer = (e) => {
+    const handleVerifyUser = async () => {
+        if (!recipientEmail) return;
+        setIsVerifying(true);
+        setVerificationError("");
+        setVerifiedUser(null);
+
+        const user = await checkUserByEmail(recipientEmail);
+        setIsVerifying(false);
+
+        if (user) {
+            setVerifiedUser(user);
+        } else {
+            setVerificationError("User not found or invalid email.");
+        }
+    };
+
+    const handleTransfer = async (e) => {
         e.preventDefault();
+        if (!verifiedUser) return;
+
         setStatus("processing");
-        setTimeout(() => {
+
+        // Check for pending inbound transactions for the recipient
+        const hasPending = await checkPendingInbound(verifiedUser.id);
+        if (hasPending) {
+            alert("Transfer Blocked: The recipient already has a pending transaction. They must accept it before receiving more.");
+            setStatus("");
+            return;
+        }
+
+        const { error } = await sendTransfer({
+            asset: selectedAssetSymbol,
+            amount: parseFloat(amount),
+            recipientId: verifiedUser.id,
+            recipientName: verifiedUser.name || verifiedUser.email
+        });
+
+        if (error) {
+            console.error(error);
+            setStatus("failed");
+            alert("Transfer failed: " + error.message);
+            setStatus("");
+        } else {
             // Success state
             setStatus("success");
 
-            // Redirect after 5 seconds
+            // Redirect after 2 seconds
             setTimeout(() => {
                 router.push("/dashboard/overview");
-            }, 5000);
-        }, 1500);
+            }, 2000);
+        }
     };
 
     return (
@@ -46,25 +93,54 @@ const TransferForm = () => {
                             setAmount("");
                         }}
                     >
-                        {userAssets.map(asset => (
+                        {safeAssets.map(asset => (
                             <option key={asset.id} value={asset.symbol}>
                                 {asset.name} ({asset.symbol})
                             </option>
                         ))}
                     </select>
                     <span className={styles.balanceHint}>
-                        Available: {selectedAsset.balance} {selectedAsset.symbol}
+                        Available: {Number(selectedAsset.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {selectedAsset.symbol}
                     </span>
                 </div>
             </div>
 
-            <CustomInput
-                label="Recipient Email / ID"
-                type="text"
-                placeholder="User email or VELORIX ID"
-                required
-                className={styles.inputGroup}
-            />
+            <div className={styles.inputGroup}>
+                <label>Recipient Email</label>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                    <CustomInput
+                        type="email"
+                        placeholder="User email"
+                        value={recipientEmail}
+                        onChange={(e) => {
+                            setRecipientEmail(e.target.value);
+                            setVerifiedUser(null);
+                            setVerificationError("");
+                        }}
+                        required
+                        className={styles.inputNoLabel}
+                        style={{ flex: 1 }}
+                    />
+                    <CustomButton
+                        type="button"
+                        variant="outline"
+                        onClick={handleVerifyUser}
+                    // disabled={isVerifying || !recipientEmail}
+                    >
+                        {isVerifying ? "..." : "Verify"}
+                    </CustomButton>
+                </div>
+                {verifiedUser && (
+                    <span className={styles.hint} style={{ color: '#4caf50' }}>
+                        Verified: {verifiedUser.name || "User found"}
+                    </span>
+                )}
+                {verificationError && (
+                    <span className={styles.hint} style={{ color: '#ff4d4d' }}>
+                        {verificationError}
+                    </span>
+                )}
+            </div>
 
             <div className={styles.inputGroup}>
                 <label>Amount</label>
@@ -89,7 +165,7 @@ const TransferForm = () => {
                 <CustomButton
                     type="submit"
                     fullWidth
-                    disabled={status === "processing" || status === "success"}
+                    disabled={status === "processing" || status === "success" || !verifiedUser}
                     className={status === "success" ? styles.successBtn : ""}
                 >
                     {status === "processing" ? "Sending..." : status === "success" ? "Transfer Sent!" : "Send Assets"}

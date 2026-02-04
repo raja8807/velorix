@@ -1,26 +1,32 @@
 import React from "react";
 import styles from "./account.module.scss";
-import { userProfile } from "@/constants/dummy_data";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
 
 const Account = () => {
     const router = useRouter();
+    const { signOut, userData } = useAuth();
 
-    const handleLogout = () => {
-        router.push("/");
+    const handleLogout = async () => {
+        await signOut();
+        router.push("/login");
     };
+
+    if (!userData) {
+        return <div className={styles.account}>Loading profile...</div>;
+    }
 
     return (
         <div className={styles.account}>
             <div className={styles.profileHeader}>
                 <div className={styles.avatarLarge}>
-                    <img src={userProfile.avatar} alt="Avatar" />
+                    <img src={userData.avatar} alt="Avatar" />
                 </div>
                 <div className={styles.userInfo}>
-                    <h2 className={styles.name}>{userProfile.name}</h2>
-                    <p className={styles.email}>{userProfile.email}</p>
-                    <span className={styles.joined}>Member since {userProfile.joined}</span>
+                    <h2 className={styles.name}>{userData.name}</h2>
+                    <p className={styles.email}>{userData.email}</p>
+                    <span className={styles.joined}>Member since {userData.joined}</span>
                 </div>
             </div>
 
@@ -33,7 +39,7 @@ const Account = () => {
                         <div>
                             <span className={styles.fieldLabel}>Current Plan</span>
                             <div className={styles.fieldValue}>
-                                {userProfile.currentSubscription || "VIP-0"}
+                                {userData.current_subscription || "VIP-0"}
                                 <span className={styles.activeBadge}>Active</span>
                             </div>
                         </div>
@@ -44,11 +50,11 @@ const Account = () => {
                             </div>
                         </div>
                     </div>
-                    {userProfile.previousSubscriptionExpired && (
+                    {userData.previous_subscription_expired && (
                         <div className={styles.expiryRow}>
                             Previous <span
                                 className={styles.textWhite}
-                            >{userProfile.previousSubscription}</span> Subscription Expired: <br /><span className={styles.textWhite}>{userProfile.previousSubscriptionExpired}</span>
+                            >{userData.previous_subscription}</span> Subscription Expired: <br /><span className={styles.textWhite}>{userData.previous_subscription_expired}</span>
                         </div>
                     )}
                 </div>
@@ -62,7 +68,7 @@ const Account = () => {
                 <div className={styles.field}>
                     <label>Wallet Address</label>
                     <div className={styles.copyRow}>
-                        <code>{userProfile.walletAddress}</code>
+                        <code>{userData.wallet_address || "Not Connected"}</code>
                         <button className={styles.copyBtn}>Copy</button>
                     </div>
                 </div>

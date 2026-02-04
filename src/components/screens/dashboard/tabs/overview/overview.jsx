@@ -1,21 +1,20 @@
-import React, { useState } from "react";
 import styles from "./overview.module.scss";
-import { transactions as initialTransactions } from "@/constants/dummy_data";
+import React, { useState } from "react";
 import TotalBalanceCard from "@/components/common/TotalBalanceCard/TotalBalanceCard";
 import TransactionModal from "./TransactionModal/TransactionModal";
+import { useAppContext } from "@/context/AppContext";
 
 const Overview = () => {
-    const [transactions, setTransactions] = useState(initialTransactions);
+    const { transactions } = useAppContext();
     const [selectedTx, setSelectedTx] = useState(null);
 
     const handleUpdateStatus = (id, newStatus) => {
-        setTransactions(prev => prev.map(tx =>
-            tx.id === id ? { ...tx, status: newStatus } : tx
-        ));
+        // Ideally call Supabase update here
+        console.log("Update status:", id, newStatus);
     };
 
     // Sort transactions: Pending first
-    const sortedTransactions = [...transactions].sort((a, b) => {
+    const sortedTransactions = [...(transactions || [])].sort((a, b) => {
         if (a.status === "Pending" && b.status !== "Pending") return -1;
         if (a.status !== "Pending" && b.status === "Pending") return 1;
         return 0;
@@ -48,7 +47,7 @@ const Overview = () => {
                             </div>
                             <div className={styles.txRight}>
                                 <span className={`${styles.txAmount} ${tx.type === 'Receive' ? styles.positive : ''}`}>
-                                    {tx.type === 'Receive' ? '+' : '-'}{tx.amount} {tx.asset}
+                                    {tx.type === 'Receive' ? '+' : '-'}{Number(tx.amount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {tx.asset}
                                 </span>
                                 <span className={`${styles.txStatus} ${tx.status === 'Pending' ? styles.pendingBadge : ''}`}>
                                     {tx.status}

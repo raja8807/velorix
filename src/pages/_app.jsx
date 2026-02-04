@@ -4,7 +4,7 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Head from "next/head";
 
 import { ToastContainer } from "react-toastify";
@@ -12,8 +12,22 @@ import Layout from "@/components/layout/layout";
 import { FONTS } from "@/styles/fonts";
 
 import { AppProvider } from "@/context/AppContext";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
 
 const AppWrapper = ({ children }) => {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading) {
+      if (!user && router.pathname.startsWith("/dashboard")) {
+        router.push("/login");
+      }
+    }
+  }, [user, loading, router.pathname]);
+
+  if (loading) return null;
+
   return <>{children}</>;
 };
 
@@ -40,18 +54,20 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   return (
-    <AppProvider>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <AppWrapper>
-        <main className={FONTS.font1}>
-          <Layout>
-            <Component {...pageProps} />
-            <ToastContainer position="bottom-right" />
-          </Layout>
-        </main>
-      </AppWrapper>
-    </AppProvider>
+    <AuthProvider>
+      <AppProvider>
+        <Head>
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+        <AppWrapper>
+          <main className={FONTS.font1}>
+            <Layout>
+              <Component {...pageProps} />
+              <ToastContainer position="bottom-right" />
+            </Layout>
+          </main>
+        </AppWrapper>
+      </AppProvider>
+    </AuthProvider>
   );
 }

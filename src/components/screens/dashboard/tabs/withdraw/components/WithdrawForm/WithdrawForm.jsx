@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import styles from "./WithdrawForm.module.scss";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import CustomInput from "@/components/ui/custom_input/custom_input";
-import { userAssets, userProfile } from "@/constants/dummy_data";
 import { useRouter } from "next/router";
+import { useAuth } from "@/context/AuthContext";
+import { useAppContext } from "@/context/AppContext";
 
 const WithdrawForm = () => {
     const router = useRouter();
+    const { userData } = useAuth();
+    const { assets } = useAppContext();
     const [status, setStatus] = useState("");
-    const [selectedAssetSymbol, setSelectedAssetSymbol] = useState(userAssets[0]?.symbol || "");
+    const [selectedAssetSymbol, setSelectedAssetSymbol] = useState("BTC");
     const [amount, setAmount] = useState("");
 
-    const selectedAsset = userAssets.find(a => a.symbol === selectedAssetSymbol) || {};
+    const safeAssets = assets || [];
+    const selectedAsset = safeAssets.find(a => a.symbol === selectedAssetSymbol) || {};
 
     const handleMax = () => {
         if (selectedAsset) {
@@ -28,7 +32,7 @@ const WithdrawForm = () => {
 
         setTimeout(() => {
 
-            if (!userProfile.currentSubscription || userProfile.currentSubscription === "VIP-0") {
+            if (!userData?.current_subscription || userData.current_subscription === "VIP-0") {
                 alert("You must have an active subscription plan to withdraw funds.");
                 router.push("/dashboard/account/subscription");
                 return;
@@ -51,14 +55,14 @@ const WithdrawForm = () => {
                             setAmount(""); // Reset amount on asset change
                         }}
                     >
-                        {userAssets.map(asset => (
+                        {safeAssets.map(asset => (
                             <option key={asset.id} value={asset.symbol}>
                                 {asset.name} ({asset.symbol})
                             </option>
                         ))}
                     </select>
                     <span className={styles.balanceHint}>
-                        Available: {selectedAsset.balance} {selectedAsset.symbol}
+                        Available: {Number(selectedAsset.balance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {selectedAsset.symbol}
                     </span>
                 </div>
             </div>
