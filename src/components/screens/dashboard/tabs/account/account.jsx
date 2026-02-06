@@ -3,6 +3,7 @@ import styles from "./account.module.scss";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import { useRouter } from "next/router";
 import { useAuth } from "@/context/AuthContext";
+import { toast } from "react-toastify";
 
 const Account = () => {
     const router = useRouter();
@@ -11,6 +12,10 @@ const Account = () => {
     const handleLogout = async () => {
         await signOut();
         router.push("/login");
+    };
+
+    const handleChangePassword = () => {
+        toast.success("Password reset link has been sent to email");
     };
 
     if (!userData) {
@@ -74,6 +79,14 @@ const Account = () => {
                                 <button className={styles.copyBtn}>Copy</button>
                             )
                         }
+                    </div>
+                </div>
+                <div className={styles.field} style={{ marginTop: '16px' }}>
+                    <label>Password</label>
+                    <div>
+                        <CustomButton variant="outline" onClick={handleChangePassword}>
+                            Change Password
+                        </CustomButton>
                     </div>
                 </div>
             </div>

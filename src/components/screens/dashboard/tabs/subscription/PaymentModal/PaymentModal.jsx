@@ -241,7 +241,7 @@ const PaymentModal = ({ plan, onClose, onSuccess }) => {
                                     onMouseOver={(e) => e.target.style.color = '#F7931A'}
                                     onMouseOut={(e) => e.target.style.color = '#888'}
                                 >
-                                    Don't know how to pay? <span style={{ textDecoration: 'underline' }}>Click here</span>
+                                    Don&apos;t know how to pay? <span style={{ textDecoration: 'underline' }}>Click here</span>
                                 </a>
                             </div>
                         </div>
