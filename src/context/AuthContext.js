@@ -69,36 +69,15 @@ export const AuthProvider = ({ children }) => {
     }
 
     useEffect(() => {
-        const initializeAuth = async () => {
-            // Check active session
-            const { data: { session }, error } = await supabase.auth.getSession()
-            if (error) console.error('Error getting session:', error)
+        let mounted = true
+
+        const handleSession = async (session) => {
+            if (!mounted) return
 
             setSession(session)
             setUser(session?.user ?? null)
 
             if (session?.user) {
-                let profile = await fetchProfile(session.user.id)
-                if (!profile) {
-                    profile = await createProfile(session.user)
-                }
-                setUserData(profile)
-            } else {
-                setUserData(null)
-            }
-            setLoading(false)
-        }
-
-        initializeAuth()
-
-        // Listen for auth changes
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
-            setSession(session)
-            setUser(session?.user ?? null)
-
-            if (session?.user) {
-                // Determine if we need to fetch profile (optimization: check if ID changed or no userData)
-                // For safety, let's fetch.
                 let profile = await fetchProfile(session.user.id)
                 if (!profile) {
                     profile = await createProfile(session.user)
@@ -109,10 +88,26 @@ export const AuthProvider = ({ children }) => {
             }
 
             setLoading(false)
+        }
+
+        // 1️⃣ Subscribe FIRST
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((_event, session) => {
+            handleSession(session)
         })
 
-        return () => subscription.unsubscribe()
+        // 2️⃣ Bootstrap once (non-authoritative)
+        supabase.auth.getSession().then(({ data }) => {
+            handleSession(data.session)
+        })
+
+        return () => {
+            mounted = false
+            subscription.unsubscribe()
+        }
     }, [])
+
 
     const signUp = async (email, password) => {
         const { data, error } = await supabase.auth.signUp({

@@ -18,6 +18,9 @@ const AppWrapper = ({ children }) => {
   const { user, loading } = useAuth();
   const router = useRouter();
 
+  console.log(loading);
+
+
   useEffect(() => {
     if (!loading) {
       if (!user && router.pathname.startsWith("/dashboard")) {
