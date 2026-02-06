@@ -25,7 +25,9 @@ const Withdraw = () => {
                     </button>
                 </div>
 
-                {activeTab === "withdraw" ? <WithdrawForm /> : <TransferForm />}
+                {activeTab === "withdraw" ? <WithdrawForm
+                    setActiveTab={setActiveTab}
+                /> : <TransferForm />}
             </div>
         </div>
     );

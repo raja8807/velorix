@@ -1,0 +1,82 @@
+.wrapper {
+    min-height: 100vh;
+    background-color: $color_bg_primary;
+    @include flexCenter;
+    padding: 20px;
+    padding-top: 100px;
+
+    background-image: radial-gradient(circle at 50% 10%, rgba($color_primary, 0.1), transparent 40%);
+}
+
+.card {
+    background: $color_bg_secondary;
+    border: 1px solid $color_border;
+    border-radius: 20px;
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: $box-shadow;
+    position: relative;
+    overflow: hidden;
+
+    @include respond-below(sm) {
+        padding: 30px 20px;
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    .title {
+        color: $color_text_primary;
+        font-size: 1.8rem;
+        margin-bottom: 8px;
+    }
+
+    .subtitle {
+        color: $color_text_secondary;
+        font-size: 0.95rem;
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.row {
+    display: flex;
+    gap: 16px;
+
+    @include respond-below(sm) {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    &>* {
+        flex: 1;
+    }
+}
+
+.sectionTitle {
+    color: $color_text_tertiary;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+    margin-left: 4px;
+}
+
+.errorMessage {
+    background: rgba($color_error, 0.1);
+    color: $color_error;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.actions {
+    margin-top: 10px;
+}

@@ -39,6 +39,7 @@ const DashboardLayout = ({ children }) => {
         <div className={styles.dashboardLayout}>
             <aside className={styles.sidebar}>
                 <div className={styles.logo}>
+                    <h2>VELORIX</h2>
                 </div>
                 <nav className={styles.nav}>
                     {navItems.map((item) => (

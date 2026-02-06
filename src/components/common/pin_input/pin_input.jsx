@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import styles from "./pin_input.module.scss";
 
-const PinInput = ({ length = 6, onChange }) => {
+const PinInput = ({ length = 6, onChange, showForgot = true }) => {
     const [values, setValues] = useState(Array(length).fill(""));
     const [resetSent, setResetSent] = useState(false);
     const inputsRef = useRef([]);
@@ -70,17 +70,19 @@ const PinInput = ({ length = 6, onChange }) => {
                     />
                 ))}
             </div>
-            <div className={styles.footer}>
-                {resetSent ? (
-                    <span className={styles.successMessage}>
-                        Reset PIN link sent to your email
-                    </span>
-                ) : (
-                    <button type="button" onClick={handleForgot} className={styles.forgotLink}>
-                        Forgot Security PIN?
-                    </button>
-                )}
-            </div>
+            {showForgot && (
+                <div className={styles.footer}>
+                    {resetSent ? (
+                        <span className={styles.successMessage}>
+                            Reset PIN link sent to your email
+                        </span>
+                    ) : (
+                        <button type="button" onClick={handleForgot} className={styles.forgotLink}>
+                            Forgot Security PIN?
+                        </button>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

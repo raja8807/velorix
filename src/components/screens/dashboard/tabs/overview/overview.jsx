@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import TotalBalanceCard from "@/components/common/TotalBalanceCard/TotalBalanceCard";
 import TransactionModal from "./TransactionModal/TransactionModal";
 import { useAppContext } from "@/context/AppContext";
+import { Image } from "react-bootstrap";
 
 const Overview = () => {
     const { transactions } = useAppContext();
@@ -19,6 +20,21 @@ const Overview = () => {
         if (a.status !== "Pending" && b.status === "Pending") return 1;
         return 0;
     });
+
+    const icons = {
+        'BTC': 'https://coin-images.coingecko.com/coins/images/1/large/bitcoin.png?1696501400',
+        'ETH': 'https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501400',
+        'USDT': 'https://coin-images.coingecko.com/coins/images/325/large/Tether.png?1696501661',
+        'BNB': 'https://coin-images.coingecko.com/coins/images/1839/large/binance-coin.png?1696501400',
+        'SOL': 'https://coin-images.coingecko.com/coins/images/4128/large/solana.png?1718769756',
+        'ADA': 'https://coin-images.coingecko.com/coins/images/2679/large/cardano.png?1696501400',
+        'XRP': 'https://coin-images.coingecko.com/coins/images/1419/large/xrp.png?1696501400',
+        'DOGE': 'https://coin-images.coingecko.com/coins/images/2261/large/dogecoin.png?1696501400',
+        'TRX': 'https://coin-images.coingecko.com/coins/images/1825/large/tron.png?1696501400',
+        'LTC': 'https://coin-images.coingecko.com/coins/images/2261/large/dogecoin.png?1696501400',
+    }
+
+
 
     return (
         <div className={styles.overview}>
@@ -38,7 +54,8 @@ const Overview = () => {
                         >
                             <div className={styles.txLeft}>
                                 <div className={`${styles.icon} ${styles[tx.type.toLowerCase()]}`}>
-                                    {tx.type[0]}
+                                    {/* {tx.type[0]} */}
+                                    <Image src={icons[tx.asset]} alt={tx.asset} width={24} height={24} />
                                 </div>
                                 <div className={styles.txInfo}>
                                     <span className={styles.txType}>{tx.type} {tx.asset}</span>

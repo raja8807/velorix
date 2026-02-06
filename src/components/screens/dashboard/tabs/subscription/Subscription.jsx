@@ -28,11 +28,11 @@ const Subscription = () => {
         {
             id: "VIP-1",
             name: "VIP-1",
-            price: 9.99,
-            limit: "5,000",
+            price: 14.99,
+            limit: "10,000",
             benefits: [
                 "Everything in VIP-0",
-                "$5,000 Monthly limit",
+                "$10,000 Monthly limit",
                 "Standard support",
                 "Withdrawals enabled"
             ],

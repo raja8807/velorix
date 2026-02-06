@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import styles from "./WithdrawForm.module.scss";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import CustomInput from "@/components/ui/custom_input/custom_input";
-import { useRouter } from "next/router";
-import { useAuth } from "@/context/AuthContext";
 import { useAppContext } from "@/context/AppContext";
+import PinInput from "@/components/common/pin_input/pin_input";
 
-const WithdrawForm = () => {
-    const router = useRouter();
-    const { userData } = useAuth();
+const WithdrawForm = ({ setActiveTab }) => {
     const { assets } = useAppContext();
     const [status, setStatus] = useState("");
     const [selectedAssetSymbol, setSelectedAssetSymbol] = useState("BTC");
     const [amount, setAmount] = useState("");
+    const [pin, setPin] = useState("");
+    const [error, setError] = useState("");
 
     const safeAssets = assets || [];
     const selectedAsset = safeAssets.find(a => a.symbol === selectedAssetSymbol) || {};
@@ -25,20 +24,33 @@ const WithdrawForm = () => {
 
     const handleWithdraw = (e) => {
         e.preventDefault();
+        setError("");
+
+        if (pin.length < 6) {
+            setError("Please enter complete PIN");
+            return;
+        }
+
         setStatus("processing");
-
-
-
 
         setTimeout(() => {
 
-            if (!userData?.current_subscription || userData.current_subscription === "VIP-0") {
-                alert("You must have an active subscription plan to withdraw funds.");
-                router.push("/dashboard/account/subscription");
-                return;
-            }
+            // if (!userData?.current_subscription || userData.current_subscription === "VIP-0") {
+            //     alert("You must have an active subscription plan to withdraw funds.");
+            //     router.push("/dashboard/account/subscription");
+            //     return;
+            // }
 
+            // Simulate incorrect PIN error as requeste
+            setError(<p className={styles.error}>Incorrect Security PIN. <span
+                onClick={() => setActiveTab("transfer")}
+            >Try Internal Transfer</span></p>);
+            setStatus("");
+            return;
+
+            /* Unreachable success state for now
             setStatus("success");
+            */
         }, 1500);
     };
 
@@ -92,10 +104,13 @@ const WithdrawForm = () => {
                 </div>
             </div>
 
-            <div className={styles.infoRow}>
-                <span>Network Fee</span>
-                <span>0.0004 BTC</span>
+            <div className={styles.inputGroup}>
+                <label>Security PIN</label>
+                <PinInput length={6} onChange={(val) => { setPin(val); setError(""); }} />
+                {error && error}
             </div>
+
+
 
             <div className={styles.actions}>
                 <CustomButton type="submit" fullWidth disabled={status === "processing"}>

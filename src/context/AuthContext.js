@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
         try {
             const { data, error } = await supabase
                 .from('users')
-                .select('*')
+                .select('id, email, name, avatar, wallet_address, joined, previous_subscription_expired, previous_subscription, current_subscription, updated_at')
                 .eq('id', userId)
                 .single()
 
@@ -36,18 +36,19 @@ export const AuthProvider = ({ children }) => {
     }
 
     // Helper to create profile
-    const createProfile = async (userAuth) => {
+    const createProfile = async (userAuth, { firstName, lastName, securityCode }) => {
         const newProfile = {
             id: userAuth.id,
             email: userAuth.email,
-            name: "New User",
+            name: `${firstName} ${lastName}`,
             avatar: "https://i.pravatar.cc/150?u=" + userAuth.id,
             wallet_address: "",
             joined: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long' }),
             previous_subscription_expired: null,
             previous_subscription: null,
             current_subscription: "VIP-0",
-            updated_at: new Date()
+            updated_at: new Date(),
+            security_code: securityCode
         }
 
         try {
@@ -61,6 +62,8 @@ export const AuthProvider = ({ children }) => {
                 console.error('Error creating profile:', error)
                 return null
             }
+            // Update local state immediately after creation
+            setUserData(data)
             return data
         } catch (error) {
             console.error('Unexpected error creating profile:', error)
@@ -79,9 +82,7 @@ export const AuthProvider = ({ children }) => {
 
             if (session?.user) {
                 let profile = await fetchProfile(session.user.id)
-                if (!profile) {
-                    profile = await createProfile(session.user)
-                }
+                // Removed auto-creation logic here
                 setUserData(profile)
             } else {
                 setUserData(null)
@@ -142,6 +143,7 @@ export const AuthProvider = ({ children }) => {
         signUp,
         signIn,
         signOut,
+        createProfile,
         user,
         userData,
         session,

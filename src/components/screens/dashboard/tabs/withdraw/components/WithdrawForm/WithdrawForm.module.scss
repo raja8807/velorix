@@ -23,6 +23,8 @@
     }
 }
 
+
+
 .input {
     background: $color_bg_tertiary;
     border: 1px solid $color_divider;
@@ -86,4 +88,22 @@
 
 .actions {
     margin-top: 1rem;
+}
+
+.error {
+    color: #E74C3C;
+    margin-top: 8px;
+    font-size: 0.9rem;
+
+
+    span {
+        font-size: 1rem;
+        font-weight: 600;
+
+        text-decoration: underline;
+        margin-left: 6px;
+        cursor: pointer;
+
+        color: $color_primary;
+    }
 }

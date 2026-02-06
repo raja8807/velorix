@@ -21,7 +21,7 @@ const Account = () => {
         <div className={styles.account}>
             <div className={styles.profileHeader}>
                 <div className={styles.avatarLarge}>
-                    <img src={userData.avatar} alt="Avatar" />
+                    <p>{userData.name.charAt(0).toUpperCase()}</p>
                 </div>
                 <div className={styles.userInfo}>
                     <h2 className={styles.name}>{userData.name}</h2>
@@ -69,7 +69,11 @@ const Account = () => {
                     <label>Wallet Address</label>
                     <div className={styles.copyRow}>
                         <code>{userData.wallet_address || "Not Connected"}</code>
-                        <button className={styles.copyBtn}>Copy</button>
+                        {
+                            userData.wallet_address && (
+                                <button className={styles.copyBtn}>Copy</button>
+                            )
+                        }
                     </div>
                 </div>
             </div>

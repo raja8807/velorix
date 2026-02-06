@@ -107,7 +107,7 @@ const TransferForm = () => {
 
             <div className={styles.inputGroup}>
                 <label>Recipient Email</label>
-                <div style={{ display: 'flex', gap: '10px' }}>
+                <div style={{ display: 'flex', gap: '0px' }}>
                     <CustomInput
                         type="email"
                         placeholder="User email"
@@ -119,7 +119,7 @@ const TransferForm = () => {
                         }}
                         required
                         className={styles.inputNoLabel}
-                        style={{ flex: 1 }}
+
                     />
                     <CustomButton
                         type="button"
@@ -149,7 +149,7 @@ const TransferForm = () => {
                         type="number"
                         placeholder="0.00"
                         required
-                        className={styles.inputNoLabel}
+                        className={styles.amt}
                         value={amount}
                         onChange={(e) => setAmount(e.target.value)}
                     />

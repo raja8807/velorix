@@ -15,7 +15,7 @@ import { AppProvider } from "@/context/AppContext";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 
 const AppWrapper = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, userData, loading } = useAuth();
   const router = useRouter();
 
   console.log(loading);
@@ -23,11 +23,27 @@ const AppWrapper = ({ children }) => {
 
   useEffect(() => {
     if (!loading) {
-      if (!user && router.pathname.startsWith("/dashboard")) {
-        router.push("/login");
+      if (!user) {
+        // Not logged in
+        if (router.pathname.startsWith("/dashboard") || router.pathname === "/complete-profile") {
+          router.push("/login");
+        }
+      } else {
+        // Logged in
+        if (!userData) {
+          // No profile yet -> Go to complete profile
+          if (router.pathname !== "/complete-profile") {
+            router.push("/complete-profile");
+          }
+        } else {
+          // Has profile -> Block access to complete profile page
+          if (router.pathname === "/complete-profile") {
+            router.push("/dashboard");
+          }
+        }
       }
     }
-  }, [user, loading, router.pathname]);
+  }, [user, loading, router.pathname, userData]);
 
   if (loading) return null;
 
